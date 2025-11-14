@@ -1,4 +1,5 @@
 const express = require("express");
+const connectDB = require("./configs/mongodb");
 const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
@@ -7,4 +8,5 @@ app.get("/", (req, res) => {
 });
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+  connectDB();
 });
