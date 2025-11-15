@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
+const sendEmail = require("../utils/send.email");
 require("dotenv").config();
 
 const register = async (req, res) => {
@@ -13,6 +14,7 @@ const register = async (req, res) => {
     const newUser = new User({ userName, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
+    sendEmail(email, userName, { subject: "Welcome to Devscribe!" });
   } catch (error) {
     res.status(500).json({ message: "Error registering user", error });
   }

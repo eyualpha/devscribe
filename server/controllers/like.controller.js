@@ -4,7 +4,6 @@ const handleLikePost = async (req, res) => {
   try {
     const postId = req.params.postId;
     const userId = req.user.userId;
-    console.log(userId, postId);
 
     const post = await Post.findById(postId);
     if (!post) {
