@@ -10,11 +10,20 @@ const register = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
+  let profilePicture = null;
+  if (req.file) {
+    profilePicture = req.file.path;
+  }
   try {
-    const newUser = new User({ userName, email, password: hashedPassword });
+    const newUser = new User({
+      userName,
+      email,
+      password: hashedPassword,
+      profilePicture: profilePicture,
+    });
     await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
-    sendEmail(email, userName, { subject: "Welcome to Devscribe!" });
+    sendEmail(email, userName, "Welcome to DevScribe!");
   } catch (error) {
     res.status(500).json({ message: "Error registering user", error });
   }
