@@ -12,6 +12,7 @@ const {
   createComment,
   getCommentsByPostId,
 } = require("../controllers/comment.controller");
+const { handleLikePost } = require("../controllers/like.controller");
 
 const postRouter = express.Router();
 
@@ -31,8 +32,6 @@ postRouter.post("/comment/:postId", isAuthenticated, createComment);
 
 postRouter.get("/comment/:postId", isAuthenticated, getCommentsByPostId);
 
-postRouter.put("/like/:postId", isAuthenticated, (req, res) => {
-  res.send("Like post endpoint");
-});
+postRouter.put("/like/:postId", isAuthenticated, handleLikePost);
 
 module.exports = postRouter;
