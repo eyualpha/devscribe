@@ -1,22 +1,26 @@
 const express = require("express");
+const { isAuthenticated } = require("../middlewares/auth.middleware");
+const {
+  createPost,
+  getAllPosts,
+  getPostById,
+  updatePost,
+  deletePost,
+  getPostsByUserId,
+} = require("../controllers/post.controller");
+
 const postRouter = express.Router();
 
-postRouter.post("/", (req, res) => {
-  res.send("Create a new post");
-});
+postRouter.post("/", isAuthenticated, createPost);
 
-postRouter.get("/", (req, res) => {
-  res.send("Get all posts");
-});
+postRouter.get("/", getAllPosts);
 
-postRouter.get("/:id", (req, res) => {
-  res.send(`Get post with ID: ${req.params.id}`);
-});
+postRouter.get("/:id", isAuthenticated, getPostById);
 
-postRouter.put("/:id", (req, res) => {
-  res.send(`Update post with ID: ${req.params.id}`);
-});
-postRouter.delete("/:id", (req, res) => {
-  res.send(`Delete post with ID: ${req.params.id}`);
-});
+postRouter.put("/:id", isAuthenticated, updatePost);
+
+postRouter.delete("/:id", isAuthenticated, deletePost);
+
+postRouter.get("/user/:userId", isAuthenticated, getPostsByUserId);
+
 module.exports = postRouter;

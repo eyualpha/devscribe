@@ -1,13 +1,11 @@
 const express = require("express");
 const { register } = require("../controllers/auth.controller");
+const { isAuthenticated } = require("../middlewares/auth.middleware");
+const { getAllUsers, getUserById } = require("../controllers/user.controller");
 const userRouter = express.Router();
 
-userRouter.get("/", (req, res) => {
-  res.send("Get all users");
-});
+userRouter.get("/", isAuthenticated, getAllUsers);
 
-userRouter.get("/:id", (req, res) => {
-  res.send(`Get user with ID: ${req.params.id}`);
-});
+userRouter.get("/:id", isAuthenticated, getUserById);
 
 module.exports = userRouter;
