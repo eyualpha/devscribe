@@ -8,6 +8,10 @@ const {
   deletePost,
   getPostsByUserId,
 } = require("../controllers/post.controller");
+const {
+  createComment,
+  getCommentsByPostId,
+} = require("../controllers/comment.controller");
 
 const postRouter = express.Router();
 
@@ -15,12 +19,20 @@ postRouter.post("/", isAuthenticated, createPost);
 
 postRouter.get("/", getAllPosts);
 
-postRouter.get("/:id", isAuthenticated, getPostById);
+postRouter.get("/:postId", isAuthenticated, getPostById);
 
-postRouter.put("/:id", isAuthenticated, updatePost);
+postRouter.put("/:postId", isAuthenticated, updatePost);
 
-postRouter.delete("/:id", isAuthenticated, deletePost);
+postRouter.delete("/:postId", isAuthenticated, deletePost);
 
 postRouter.get("/user/:userId", isAuthenticated, getPostsByUserId);
+
+postRouter.post("/comment/:postId", isAuthenticated, createComment);
+
+postRouter.get("/comment/:postId", isAuthenticated, getCommentsByPostId);
+
+postRouter.put("/like/:postId", isAuthenticated, (req, res) => {
+  res.send("Like post endpoint");
+});
 
 module.exports = postRouter;

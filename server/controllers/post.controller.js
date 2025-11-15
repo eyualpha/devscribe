@@ -2,10 +2,10 @@ const Post = require("../models/post.model");
 
 const createPost = async (req, res) => {
   console.log("Creating post for user:", req.user);
-  const { title, content } = req.body;
+  const { title, description } = req.body;
   const createdBy = req.user.userId;
   try {
-    const newPost = new Post({ title, content, createdBy });
+    const newPost = new Post({ title, description, createdBy });
     await newPost.save();
     res.status(201).json({ message: "Post created successfully" });
   } catch (error) {
@@ -22,7 +22,7 @@ const getAllPosts = async (req, res) => {
   }
 };
 const getPostById = async (req, res) => {
-  const postId = req.params.id;
+  const postId = req.params.postId;
   try {
     const post = await Post.findById(postId);
     if (!post) {
@@ -35,12 +35,12 @@ const getPostById = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  const postId = req.params.id;
-  const { title, content, author } = req.body;
+  const postId = req.params.postId;
+  const { title, description } = req.body;
   try {
     const updatedPost = await Post.findByIdAndUpdate(
       postId,
-      { title, content, author },
+      { title, description },
       { new: true }
     );
     if (!updatedPost) {
@@ -53,7 +53,7 @@ const updatePost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  const postId = req.params.id;
+  const postId = req.params.postId;
   try {
     const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {

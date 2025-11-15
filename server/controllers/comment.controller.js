@@ -1,8 +1,9 @@
 const Comment = require("../models/comment.model");
 
 const createComment = async (req, res) => {
-  const { content, postId } = req.body;
-  const createdBy = req.user._id;
+  const { content } = req.body;
+  const postId = req.params.id;
+  const createdBy = req.user.userId;
   try {
     const newComment = new Comment({ content, postId, createdBy });
     await newComment.save();
@@ -13,7 +14,7 @@ const createComment = async (req, res) => {
 };
 
 const getCommentsByPostId = async (req, res) => {
-  const postId = req.params.postId;
+  const postId = req.params.id;
   try {
     const comments = await Comment.find({ postId });
     res.status(200).json(comments);

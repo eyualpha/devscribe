@@ -1,8 +1,8 @@
 const express = require("express");
-const connectDB = require("./configs/mongodb");
-require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const connectDB = require("./configs/mongodb");
+require("dotenv").config();
 
 const userRouter = require("./routes/user.route");
 const postRouter = require("./routes/post.route");
